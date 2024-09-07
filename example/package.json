@@ -1,0 +1,37 @@
+{
+  "name": "example",
+  "private": true,
+  "sideEffects": false,
+  "type": "module",
+  "scripts": {
+    "build": "remix vite:build",
+    "deploy": "npm run build && wrangler pages deploy",
+    "dev": "remix vite:dev",
+    "start": "wrangler pages dev ./build/client",
+    "typecheck": "tsc",
+    "preview": "npm run build && wrangler pages dev"
+  },
+  "dependencies": {
+    "@remix-run/cloudflare": "^2.11.1",
+    "@remix-run/cloudflare-pages": "^2.11.1",
+    "@remix-run/react": "^2.11.1",
+    "hono": "^4.5.11",
+    "hono-remix-adapter": "*",
+    "isbot": "^4.1.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20240903.0",
+    "@remix-run/dev": "^2.11.1",
+    "@types/react": "^18.2.20",
+    "@types/react-dom": "^18.2.7",
+    "typescript": "^5.1.6",
+    "vite": "^5.1.0",
+    "vite-tsconfig-paths": "^4.2.1",
+    "wrangler": "3.57.1"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}

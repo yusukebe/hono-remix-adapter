@@ -1,0 +1,9 @@
+node_modules
+package-lock.json
+
+/.cache
+/build
+.env
+.dev.vars
+
+.wrangler
