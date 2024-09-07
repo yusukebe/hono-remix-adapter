@@ -47,6 +47,27 @@ npm i hono-remix-adapter hono @remix-run/react
 
 Just edit your `app/entry.server.tsx`.
 
+```ts
+// app/entry.server.tsx
+import { handle } from 'hono-remix-adapter'
+
+export default handle()
+```
+
+You can pass your Hono app.
+
+```ts
+// app/entry.server.tsx
+import { handle } from 'hono-remix-adapter'
+import { Hono } from 'hono'
+
+const app = new Hono()
+
+//...
+
+export default handle(app)
+```
+
 ## Author
 
 Yusuke Wada <https://github.com/yusukebe>
