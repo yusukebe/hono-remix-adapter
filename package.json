@@ -6,11 +6,19 @@
   "module": "dist/index.js",
   "scripts": {
     "test": "vitest",
-    "build": "tsup --dts --format esm,cjs src/index.tsx"
+    "build": "tsup --dts --format esm,cjs src/index.tsx",
+    "publint": "publint",
+    "release": "np"
   },
   "files": [
     "dist"
   ],
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
   "devDependencies": {
     "@cloudflare/vitest-pool-workers": "^0.4.23",
     "@cloudflare/workers-types": "^4.20240815.0",
@@ -20,6 +28,8 @@
     "@types/react-dom": "^18.3.0",
     "eslint": "^8.57.0",
     "hono": "^4.5.11",
+    "np": "^10.0.7",
+    "publint": "^0.2.10",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "tsup": "^8.2.4",
