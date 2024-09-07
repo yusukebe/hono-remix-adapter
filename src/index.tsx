@@ -1,8 +1,9 @@
 import type { EntryContext } from '@remix-run/cloudflare'
+import { RemixServer } from '@remix-run/react'
+import { Hono } from 'hono'
+import { isbot } from 'isbot'
 // @ts-expect-error `react-dom/server.browser` is not typed
 import { renderToReadableStream } from 'react-dom/server.browser'
-import { Hono } from 'hono'
-import { RemixServer } from '@remix-run/react'
 
 export const handle =
   (userApp?: Hono) =>
@@ -36,6 +37,11 @@ export const handle =
           },
         }
       )
+
+      if (isbot(request.headers.get('user-agent') || '')) {
+        await body.allReady
+      }
+
       c.header('Content-Type', 'text/html')
       return c.body(body, {
         status: c.env.responseStatusCode,

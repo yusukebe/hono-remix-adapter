@@ -1,7 +1,7 @@
-import { handle } from './index'
-import { describe, expect, it } from 'vitest'
 import type { EntryContext } from '@remix-run/cloudflare'
 import { Hono } from 'hono'
+import { describe, expect, it } from 'vitest'
+import { handle } from './index'
 
 describe('Basic', () => {
   it('Should return 200 response with the mock context', async () => {

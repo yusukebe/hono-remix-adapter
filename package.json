@@ -38,6 +38,7 @@
     "@types/react-dom": "^18.3.0",
     "eslint": "^8.57.0",
     "hono": "^4.5.11",
+    "isbot": "^5.1.17",
     "np": "^10.0.7",
     "publint": "^0.2.10",
     "react": "^18.3.1",
@@ -46,10 +47,11 @@
     "vitest": "1.5.0"
   },
   "peerDependencies": {
-    "@remix-run/react": "^2.11.2",
+    "@remix-run/react": ">=2.0.0",
+    "isbot": ">=5.0.0",
     "hono": "*",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1"
+    "react": ">=18.0.0",
+    "react-dom": ">=18.0.0"
   },
   "engines": {
     "node": ">=18.0.0"
