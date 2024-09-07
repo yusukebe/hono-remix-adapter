@@ -19,6 +19,16 @@
       "require": "./dist/index.cjs"
     }
   },
+  "author": "Yusuke Wada <yusuke@kamawada.com> (https://github.com/yusukebe)",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yusukebe/hono-remix-adapter.git"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org",
+    "access": "public"
+  },
   "devDependencies": {
     "@cloudflare/vitest-pool-workers": "^0.4.23",
     "@cloudflare/workers-types": "^4.20240815.0",
