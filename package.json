@@ -1,0 +1,21 @@
+{
+  "name": "hono-remix-adapter",
+  "scripts": {
+    "test": "vitest"
+  },
+  "devDependencies": {
+    "@cloudflare/vitest-pool-workers": "^0.4.23",
+    "@cloudflare/workers-types": "^4.20240815.0",
+    "@hono/eslint-config": "^0.0.6",
+    "@remix-run/cloudflare": "^2.11.2",
+    "@remix-run/react": "^2.11.2",
+    "@types/react-dom": "^18.3.0",
+    "eslint": "^8.57.0",
+    "hono": "^4.5.11",
+    "react-dom": "^18.3.1",
+    "vitest": "1.5.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
