@@ -16,7 +16,7 @@
     "@remix-run/cloudflare-pages": "^2.11.1",
     "@remix-run/react": "^2.11.1",
     "hono": "^4.5.11",
-    "hono-remix-adapter": "*",
+    "hono-remix-adapter": "^0.0.1",
     "isbot": "^4.1.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
