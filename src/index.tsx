@@ -1,9 +1,9 @@
-import type { EntryContext } from '@remix-run/cloudflare'
 import { RemixServer } from '@remix-run/react'
 import { Hono } from 'hono'
 import { isbot } from 'isbot'
 // @ts-expect-error `react-dom/server.browser` is not typed
 import { renderToReadableStream } from 'react-dom/server.browser'
+import type { EntryContext } from '@remix-run/cloudflare'
 
 export const handle =
   (userApp?: Hono) =>
