@@ -48,7 +48,7 @@
   },
   "peerDependencies": {
     "@remix-run/react": ">=2.0.0",
-    "isbot": ">=5.0.0",
+    "isbot": ">=4.0.0",
     "hono": "*",
     "react": ">=18.0.0",
     "react-dom": ">=18.0.0"
