@@ -2,28 +2,34 @@
   "name": "hono-remix-adapter",
   "version": "0.0.3",
   "type": "module",
-  "types": "dist/index.d.ts",
-  "module": "dist/index.js",
   "scripts": {
-    "test": "vitest",
-    "build": "tsup --dts --format esm,cjs src/index.tsx",
+    "test:e2e": "npm run test:e2e -w example",
+    "build": "tsup --dts --format esm --external ../server,'virtual:remix/server-build',hono,@remix-run/cloudflare,vite src/vite-plugin.ts src/dev.ts src/cloudflare-pages.ts",
     "publint": "publint",
     "release": "np"
   },
   "files": [
     "dist"
   ],
+  "workspaces": [
+    "/",
+    "./example"
+  ],
   "exports": {
-    ".": {
-      "import": "./dist/index.js",
-      "require": "./dist/index.cjs"
+    "./vite": {
+      "types": "./dist/vite-plugin.d.ts",
+      "import": "./dist/vite-plugin.js"
+    },
+    "./cloudflare-pages": {
+      "types": "./dist/cloudflare-pages.d.ts",
+      "import": "./dist/cloudflare-pages.js"
     }
   },
   "author": "Yusuke Wada <yusuke@kamawada.com> (https://github.com/yusukebe)",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/yusukebe/hono-remix-adapter.git"
+    "url": "git+https://github.com/yusukebe/hono-remix-adapter.git"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org",
@@ -32,28 +38,24 @@
   "devDependencies": {
     "@cloudflare/vitest-pool-workers": "^0.4.23",
     "@cloudflare/workers-types": "^4.20240815.0",
-    "@hono/eslint-config": "^0.0.6",
+    "@hono/eslint-config": "0.0.6",
     "@remix-run/cloudflare": "^2.11.2",
-    "@remix-run/react": "^2.11.2",
-    "@types/react-dom": "^18.3.0",
     "eslint": "^8.57.0",
     "hono": "^4.5.11",
-    "isbot": "^5.1.17",
     "np": "^10.0.7",
     "publint": "^0.2.10",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
     "tsup": "^8.2.4",
+    "vite": "^5.4.3",
     "vitest": "1.5.0"
   },
   "peerDependencies": {
-    "@remix-run/react": ">=2.0.0",
-    "isbot": ">=4.0.0",
-    "hono": "*",
-    "react": ">=18.0.0",
-    "react-dom": ">=18.0.0"
+    "hono": "*"
   },
   "engines": {
     "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "@hono/vite-dev-server": "^0.16.0",
+    "remix-hono": "^0.0.16"
   }
 }

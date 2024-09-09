@@ -1,21 +1,25 @@
 # hono-remix-adapter
 
-`hono-remix-adapter` is an adapter for Hono between Remix. With this adapter, you can write Remix's `app/entry.server.tsx` as almost the same as the Hono app.
+`hono-remix-adapter` is a set of tools for adapting between Hono and Remix. It is composed of a Vite plugin and handlers that enable it to support platforms like Cloudflare Pages. You can create an Hono app, and it will be applied to your Remix app.
 
 ```ts
-// app/entry.server.tsx
+// server/index.ts
 import { Hono } from 'hono'
-import { handle } from 'hono-remix-adapter'
 
 const app = new Hono()
 
+app.use(async (c, next) => {
+  await next()
+  c.header('X-Powered-By', 'Remix and Hono')
+})
+
 app.get('/api', (c) => {
   return c.json({
-    message: 'Hello Remix!',
+    message: 'Hello',
   })
 })
 
-export default handle(app)
+export default app
 ```
 
 This means you can create API routes with Hono's syntax and use a lot of Hono's built-in middleware and third-party middleware.
@@ -23,71 +27,69 @@ This means you can create API routes with Hono's syntax and use a lot of Hono's 
 ## Install
 
 ```bash
-npm i hono-remix-adapter hono @remix-run/react
+npm i hono-remix-adapter
 ```
 
 ## How to use
 
-Just edit your `app/entry.server.tsx`.
+Edit your `vite.config.ts`:
 
 ```ts
-// app/entry.server.tsx
-import { handle } from 'hono-remix-adapter'
+// vite.config.ts
+import serverAdapter from 'hono-remix-adapter/vite'
 
-export default handle()
+export default defineConfig({
+  plugins: [
+    // ...
+    remix(),
+    serverAdapter({
+      entry: 'server/index.ts',
+    }),
+  ],
+})
 ```
 
-You can pass your Hono app.
+Write your Hono app:
 
 ```ts
-// app/entry.server.tsx
-import { handle } from 'hono-remix-adapter'
+// server/index.ts
 import { Hono } from 'hono'
 
 const app = new Hono()
 
 //...
 
-export default handle(app)
+export default app
 ```
 
-## Don't use Auth middleware for Remix routes
+## Cloudflare Pages
 
-We don't recommend using Auth middleware, e.g., Basic Auth Middleware for Remix routes. If the user accesses an unauthorized page first and next, the user moves to the authorized page, but it does not reject the user.
+To support Cloudflare Pages, you can write the following handler on `functions/[[path]].ts`:
 
 ```ts
-import { Hono } from 'hono'
-import { basicAuth } from 'hono/basic-auth'
-import { handle } from 'hono-remix-adapter'
+// functions/[[path]].ts
+import handle from 'hono-remix-adapter/cloudflare-pages'
+import * as build from '../build/server'
+import server from '../server'
 
-const app = new Hono()
-
-// NG!!
-app.use(
-  basicAuth({
-    username: 'foo',
-    password: 'bar',
-  })
-)
-
-export default handle(app)
+export const onRequest = handle(build, server)
 ```
 
-But it's okay to add Auth middleware to Hono's routes.
+## Auth middleware for Remix routes
+
+If you want to add Auth Middleware, e.g. Basic Auth middleware, please be careful that users can access the protected pages with SPA tradition. To prevent this, add a `loader` to the page:
 
 ```ts
-// OK
-app.get(
-  '/api',
-  basicAuth({
-    username: 'foo',
-    password: 'bar',
-  }),
-  (c) => {
-    return c.json({ message: 'Hello Remix!' })
-  }
-)
+// app/routes/admin
+export const loader = async () => {
+  return { props: {} }
+}
 ```
+
+## Related works
+
+- https://github.com/sergiodxa/remix-hono
+- https://github.com/yusukebe/hono-and-remix-on-vite
 
 ## Author
 

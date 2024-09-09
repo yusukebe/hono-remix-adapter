@@ -9,23 +9,25 @@
     "dev": "remix vite:dev",
     "start": "wrangler pages dev ./build/client",
     "typecheck": "tsc",
-    "preview": "npm run build && wrangler pages dev"
+    "preview": "npm run build && wrangler pages dev",
+    "test:e2e": "playwright test -- -c playwright.config.ts e2e.test.ts"
   },
   "dependencies": {
     "@remix-run/cloudflare": "^2.11.1",
     "@remix-run/cloudflare-pages": "^2.11.1",
     "@remix-run/react": "^2.11.1",
     "hono": "^4.5.11",
-    "hono-remix-adapter": "^0.0.1",
     "isbot": "^4.1.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20240903.0",
+    "@playwright/test": "^1.47.0",
     "@remix-run/dev": "^2.11.1",
     "@types/react": "^18.2.20",
     "@types/react-dom": "^18.2.7",
+    "playwright": "^1.47.0",
     "typescript": "^5.1.6",
     "vite": "^5.1.0",
     "vite-tsconfig-paths": "^4.2.1",
