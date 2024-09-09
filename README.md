@@ -24,6 +24,10 @@ export default app
 
 This means you can create API routes with Hono's syntax and use a lot of Hono's built-in middleware and third-party middleware.
 
+> [!WARNING]
+>
+> `hono-remix-adapter` is currently unstable. The API may be changed without announcement in the future.
+
 ## Install
 
 ```bash
