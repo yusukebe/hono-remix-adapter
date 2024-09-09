@@ -53,9 +53,7 @@
     "node": ">=18.0.0"
   },
   "dependencies": {
-    "@hono/node-server": "^1.12.2",
     "@hono/vite-dev-server": "^0.16.0",
-    "minimatch": "^10.0.1",
     "remix-hono": "^0.0.16"
   }
 }
