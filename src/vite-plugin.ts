@@ -1,18 +1,27 @@
 import devServer, { defaultOptions } from '@hono/vite-dev-server'
-import adapter from '@hono/vite-dev-server/cloudflare'
 import type { Hono } from 'hono'
 import type { Plugin } from 'vite'
 import fs from 'node:fs'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 
+interface Adapter {
+  env?: Record<string, unknown> | Promise<Record<string, unknown>>
+  onServerClose?: () => Promise<void>
+  executionContext?: {
+    waitUntil(promise: Promise<unknown>): void
+    passThroughOnException(): void
+  }
+}
+
 interface Options {
   entry: string
+  adapter?: () => Adapter | Promise<Adapter>
 }
 
 export default (options: Options): Plugin => {
   return devServer({
-    adapter,
+    adapter: options?.adapter,
     entry: options.entry,
     exclude: [...defaultOptions.exclude, '/assets/**', '/app/**'],
     injectClientScript: false,
