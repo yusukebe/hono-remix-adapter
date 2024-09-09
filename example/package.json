@@ -9,7 +9,8 @@
     "dev": "remix vite:dev",
     "start": "wrangler pages dev ./build/client",
     "typecheck": "tsc",
-    "preview": "npm run build && wrangler pages dev"
+    "preview": "npm run build && wrangler pages dev",
+    "test:e2e": "playwright test -- -c playwright.config.ts e2e.test.ts"
   },
   "dependencies": {
     "@remix-run/cloudflare": "^2.11.1",

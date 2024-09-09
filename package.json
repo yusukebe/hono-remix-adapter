@@ -3,7 +3,7 @@
   "version": "0.0.3",
   "type": "module",
   "scripts": {
-    "test": "vitest",
+    "test:e2e": "npm run test:e2e -w example",
     "build": "tsup --dts --format esm --external ../server,'virtual:remix/server-build',hono,@remix-run/cloudflare,vite src/vite-plugin.ts src/dev.ts src/cloudflare-pages.ts",
     "publint": "publint",
     "release": "np"

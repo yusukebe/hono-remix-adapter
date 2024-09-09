@@ -3,7 +3,7 @@ import { staticAssets } from 'remix-hono/cloudflare'
 import { remix } from 'remix-hono/handler'
 import { handle } from 'hono/cloudflare-pages'
 
-export const handler = (serverBuild: any, userApp?: Hono) => {
+export const handler = (serverBuild: any, userApp?: Hono<any, any, any>) => {
   const app = new Hono()
 
   if (userApp) {
