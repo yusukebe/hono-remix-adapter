@@ -1,10 +1,10 @@
-import type { Plugin } from 'vite'
 import devServer, { defaultOptions } from '@hono/vite-dev-server'
 import adapter from '@hono/vite-dev-server/cloudflare'
+import type { Hono } from 'hono'
+import type { Plugin } from 'vite'
+import fs from 'node:fs'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
-import fs from 'node:fs'
-import type { Hono } from 'hono'
 
 interface Options {
   entry: string

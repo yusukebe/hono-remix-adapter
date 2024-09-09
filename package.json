@@ -6,6 +6,8 @@
     "test": "npm run test:e2e",
     "test:e2e": "npm run test:e2e -w example",
     "build": "tsup --dts --format esm --external ../server,'virtual:remix/server-build',hono,@remix-run/cloudflare,vite src/vite-plugin.ts src/dev.ts src/cloudflare-pages.ts",
+    "lint": "eslint src example/app example/server",
+    "lint:fix": "eslint src example/app example/server --fix",
     "publint": "publint",
     "release": "np"
   },
@@ -39,9 +41,9 @@
   "devDependencies": {
     "@cloudflare/vitest-pool-workers": "^0.4.23",
     "@cloudflare/workers-types": "^4.20240815.0",
-    "@hono/eslint-config": "0.0.6",
+    "@hono/eslint-config": "^1.0.1",
     "@remix-run/cloudflare": "^2.11.2",
-    "eslint": "^8.57.0",
+    "eslint": "^9.10.0",
     "hono": "^4.5.11",
     "np": "^10.0.7",
     "publint": "^0.2.10",
