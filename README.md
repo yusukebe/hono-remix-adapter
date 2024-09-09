@@ -68,7 +68,26 @@ export default app
 
 ## Cloudflare Pages
 
-To support Cloudflare Pages, you can write the following handler on `functions/[[path]].ts`:
+To support Cloudflare Pages, add the adapter in `@hono/vite-dev-server` for development.
+
+```ts
+// vite.config.ts
+import adapter from '@hono/vite-dev-server/cloudflare'
+import serverAdapter from 'hono-remix-adapter/vite'
+
+export default defineConfig({
+  plugins: [
+    // ...
+    remix(),
+    serverAdapter({
+      adapter, // Add Cloudflare Pages adapter
+      entry: 'server/index.ts',
+    }),
+  ],
+})
+```
+
+To deploy it, you can write the following handler on `functions/[[path]].ts`:
 
 ```ts
 // functions/[[path]].ts
