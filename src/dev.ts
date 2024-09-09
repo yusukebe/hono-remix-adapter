@@ -8,7 +8,7 @@ export const handle = (userApp?: Hono) => {
     app.route('/', userApp)
   }
 
-  app.all(async (c) => {
+  app.all('*', async (c) => {
     // @ts-expect-error it's not typed
     const build = await import('virtual:remix/server-build')
     const { createRequestHandler } = await import('@remix-run/cloudflare')
