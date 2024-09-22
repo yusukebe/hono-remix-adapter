@@ -5,7 +5,8 @@
   "scripts": {
     "test": "npm run test:e2e",
     "test:e2e": "npm run test:e2e -w example",
-    "build": "tsup --dts --format esm --external ../server,'virtual:remix/server-build',hono,@remix-run/cloudflare,vite src/vite-plugin.ts src/dev.ts src/cloudflare-pages.ts",
+    "build": "tsup",
+    "watch": "tsup --watch",
     "lint": "eslint src example/app example/server",
     "lint:fix": "eslint src example/app example/server --fix",
     "publint": "publint",
