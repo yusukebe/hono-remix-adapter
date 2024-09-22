@@ -7,17 +7,13 @@ import { staticAssets } from 'remix-hono/cloudflare'
 import { createGetLoadContextArgs, defaultGetLoadContext } from './remix'
 import type { GetLoadContext } from './remix'
 
-type Options = {
-  getLoadContext: GetLoadContext
-}
-
-export interface RemixMiddlewareOptions {
+interface RemixMiddlewareOptions {
   build: ServerBuild
   mode?: 'development' | 'production'
   getLoadContext?: GetLoadContext
 }
 
-export function remix({ mode, build, getLoadContext }: RemixMiddlewareOptions) {
+function remix({ mode, build, getLoadContext }: RemixMiddlewareOptions) {
   return createMiddleware(async (c) => {
     const requestHandler = createRequestHandler(build, mode)
     const args = createGetLoadContextArgs(c)
@@ -29,6 +25,10 @@ export function remix({ mode, build, getLoadContext }: RemixMiddlewareOptions) {
       loadContext instanceof Promise ? await loadContext : loadContext
     )
   })
+}
+
+type Options = {
+  getLoadContext: GetLoadContext
 }
 
 // Relaxing the type definitions
