@@ -15,6 +15,9 @@ test('Should return 200 response - /', async ({ page }) => {
 
   const contentH3 = await page.textContent('h3')
   expect(contentH3).toBe('cf,ctx,caches are available')
+
+  const contentH4 = await page.textContent('h4')
+  expect(contentH4).toBe('Extra is stuff')
 })
 
 test('Should return 200 response - /api', async ({ page }) => {

@@ -4,6 +4,7 @@ import type { Plugin } from 'vite'
 import fs from 'node:fs'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
+import type { GetLoadContext } from './remix'
 
 interface Adapter {
   env?: Record<string, unknown> | Promise<Record<string, unknown>>
@@ -17,6 +18,7 @@ interface Adapter {
 interface Options {
   entry: string
   adapter?: () => Adapter | Promise<Adapter>
+  getLoadContext?: GetLoadContext
 }
 
 export default (options: Options): Plugin => {
@@ -51,7 +53,9 @@ export default (options: Options): Plugin => {
       }
 
       const devModule = await server.ssrLoadModule(devPath)
-      return devModule['default'](app)
+      return devModule['default'](app, {
+        getLoadContext: options.getLoadContext,
+      })
     },
   })
 }

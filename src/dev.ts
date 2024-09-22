@@ -1,7 +1,12 @@
-import type { AppLoadContext } from '@remix-run/cloudflare'
 import { Hono } from 'hono'
+import { createGetLoadContextArgs, defaultGetLoadContext } from './remix'
+import type { GetLoadContext } from './remix'
 
-export const handle = (userApp?: Hono) => {
+type Options = {
+  getLoadContext: GetLoadContext
+}
+
+export const handle = (userApp?: Hono, options?: Options) => {
   const app = new Hono()
 
   if (userApp) {
@@ -13,18 +18,14 @@ export const handle = (userApp?: Hono) => {
     const build = await import('virtual:remix/server-build')
     const { createRequestHandler } = await import('@remix-run/cloudflare')
     const handler = createRequestHandler(build, 'development')
-    const remixContext = {
-      cloudflare: {
-        env: c.env,
-        cf: c.req.raw.cf,
-        ctx: {
-          ...c.executionCtx,
-        },
-        caches,
-      },
-    } as unknown as AppLoadContext
+
+    const getLoadContext = options?.getLoadContext ?? defaultGetLoadContext
+    const args = createGetLoadContextArgs(c)
+
+    const remixContext = getLoadContext(args)
     return handler(c.req.raw, remixContext)
   })
+
   return app
 }
 
