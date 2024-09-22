@@ -16,6 +16,11 @@ export const handle = (userApp?: Hono) => {
     const remixContext = {
       cloudflare: {
         env: c.env,
+        cf: c.req.raw.cf,
+        ctx: {
+          ...c.executionCtx,
+        },
+        caches,
       },
     } as unknown as AppLoadContext
     return handler(c.req.raw, remixContext)

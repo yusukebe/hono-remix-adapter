@@ -22,6 +22,11 @@ export const handler = (serverBuild: any, userApp?: Hono<any, any, any>) => {
           return {
             cloudflare: {
               env: c.env,
+              cf: c.req.raw.cf,
+              ctx: {
+                ...c.executionCtx,
+              },
+              caches,
             },
           }
         },
