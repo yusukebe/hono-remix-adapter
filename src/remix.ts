@@ -26,7 +26,8 @@ export const createGetLoadContextArgs = (c: Context) => {
         ctx: {
           ...c.executionCtx,
         },
-        caches,
+        // @ts-expect-error globalThis.caches is not typed
+        caches: globalThis.caches ? caches : undefined,
       },
     },
     request: c.req.raw,
