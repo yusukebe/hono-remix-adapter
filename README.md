@@ -98,6 +98,91 @@ import server from '../server'
 export const onRequest = handle(build, server)
 ```
 
+## `getLoadContext`
+
+If you want to add extra context values when you use Remix routes, like in the following use case:
+
+```ts
+// app/routes/_index.tsx
+import type { LoaderFunctionArgs } from '@remix-run/cloudflare'
+import { useLoaderData } from '@remix-run/react'
+
+export const loader = ({ context }) => {
+  return { extra: context.extra }
+}
+
+export default function Index() {
+  const { extra } = useLoaderData<typeof loader>()
+  return <h1>Extra is {extra}</h1>
+}
+```
+
+First, create the `getLoadContext` function and export it:
+
+```ts
+// load-context.ts
+import type { AppLoadContext } from '@remix-run/cloudflare'
+import type { PlatformProxy } from 'wrangler'
+
+type Cloudflare = Omit<PlatformProxy, 'dispose'>
+
+declare module '@remix-run/cloudflare' {
+  interface AppLoadContext {
+    cloudflare: Cloudflare
+    extra: string
+  }
+}
+
+type GetLoadContext = (args: {
+  request: Request
+  context: { cloudflare: Cloudflare }
+}) => AppLoadContext
+
+export const getLoadContext: GetLoadContext = ({ context }) => {
+  return {
+    ...context,
+    extra: 'stuff',
+  }
+}
+```
+
+Then import the `getLoadContext` and add it to the `serverAdapter` as an argument in your `vite.config.ts`:
+
+```ts
+// vite.config.ts
+import adapter from '@hono/vite-dev-server/cloudflare'
+import { vitePlugin as remix } from '@remix-run/dev'
+import serverAdapter from 'hono-remix-adapter/vite'
+import { defineConfig } from 'vite'
+import { getLoadContext } from './load-context'
+
+export default defineConfig({
+  plugins: [
+    // ...
+    remix(),
+    serverAdapter({
+      adapter,
+      getLoadContext,
+      entry: 'server/index.ts',
+    }),
+  ],
+})
+```
+
+For Cloudflare Pages, you can add it to the `handle` function:
+
+```ts
+// functions/[[path]].ts
+import handle from 'hono-remix-adapter/cloudflare-pages'
+import { getLoadContext } from 'load-context'
+import * as build from '../build/server'
+import server from '../server'
+
+export const onRequest = handle(build, server, { getLoadContext })
+```
+
+This way is almost the same as [Remix](https://remix.run/docs/en/main/guides/vite#augmenting-load-context).
+
 ## Auth middleware for Remix routes
 
 If you want to add Auth Middleware, e.g. Basic Auth middleware, please be careful that users can access the protected pages with SPA tradition. To prevent this, add a `loader` to the page:
