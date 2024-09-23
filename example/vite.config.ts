@@ -7,6 +7,7 @@ import {
 import serverAdapter from 'hono-remix-adapter/vite'
 import { defineConfig } from 'vite'
 import tsconfigPaths from 'vite-tsconfig-paths'
+import { getLoadContext } from './load-context'
 
 export default defineConfig({
   plugins: [
@@ -20,6 +21,7 @@ export default defineConfig({
     }),
     serverAdapter({
       adapter,
+      getLoadContext,
       entry: 'server/index.ts',
     }),
     tsconfigPaths(),
