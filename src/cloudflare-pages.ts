@@ -10,7 +10,7 @@ import type { GetLoadContext } from './remix'
 interface RemixMiddlewareOptions {
   build: ServerBuild
   mode?: 'development' | 'production'
-  getLoadContext?: GetLoadContext
+  getLoadContext: GetLoadContext
 }
 
 function remix({ mode, build, getLoadContext }: RemixMiddlewareOptions) {
@@ -18,7 +18,6 @@ function remix({ mode, build, getLoadContext }: RemixMiddlewareOptions) {
     const requestHandler = createRequestHandler(build, mode)
     const args = createGetLoadContextArgs(c)
 
-    // @ts-expect-error not typed well
     const loadContext = getLoadContext(args)
     return await requestHandler(
       c.req.raw,
