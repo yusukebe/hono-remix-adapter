@@ -10,6 +10,7 @@
     "lint": "eslint src example/app example/server",
     "lint:fix": "eslint src example/app example/server --fix",
     "publint": "publint",
+    "prerelease": "npm run build && npm run test",
     "release": "np"
   },
   "files": [
