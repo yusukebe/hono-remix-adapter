@@ -1,6 +1,6 @@
 {
   "name": "hono-remix-adapter",
-  "version": "0.2.2",
+  "version": "0.3.0",
   "type": "module",
   "scripts": {
     "test": "npm run test:e2e",
