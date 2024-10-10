@@ -19,13 +19,14 @@ interface Options {
   entry: string
   adapter?: () => Adapter | Promise<Adapter>
   getLoadContext?: GetLoadContext
+  exclude?: (string | RegExp)[]
 }
 
 export default (options: Options): Plugin => {
   return devServer({
     adapter: options?.adapter,
     entry: options.entry,
-    exclude: [...defaultOptions.exclude, '/assets/**', '/app/**'],
+    exclude: options?.exclude ?? [...defaultOptions.exclude, '/assets/**', '/app/**'],
     injectClientScript: false,
     loadModule: async (server, entry) => {
       const appModule = await server.ssrLoadModule(entry)
