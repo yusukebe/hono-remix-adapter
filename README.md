@@ -1,6 +1,6 @@
 # hono-remix-adapter
 
-`hono-remix-adapter` is a set of tools for adapting between Hono and Remix. It is composed of a Vite plugin and handlers that enable it to support platforms like Cloudflare Pages. You can create an Hono app, and it will be applied to your Remix app.
+`hono-remix-adapter` is a set of tools for adapting between Hono and Remix. It is composed of a Vite plugin and handlers that enable it to support platforms like Cloudflare Workers. You can create an Hono app, and it will be applied to your Remix app.
 
 ```ts
 // server/index.ts
@@ -66,9 +66,9 @@ const app = new Hono()
 export default app
 ```
 
-## Cloudflare Pages
+## Cloudflare Workers
 
-To support Cloudflare Pages, add the adapter in `@hono/vite-dev-server` for development.
+To support Cloudflare Workers and Cloudflare Pages, add the adapter in `@hono/vite-dev-server` for development.
 
 ```ts
 // vite.config.ts
@@ -87,7 +87,29 @@ export default defineConfig({
 })
 ```
 
-To deploy it, you can write the following handler on `functions/[[path]].ts`:
+To deploy your app to Cloudflare Workers, you can write the following handler on `worker.ts`:
+
+```ts
+// worker.ts
+import handle from 'hono-remix-adapter/cloudflare-workers'
+import * as build from './build/server'
+import app from './server'
+
+export default handle(build, app)
+```
+
+Specify `worker.ts` in your `wrangler.toml`:
+
+```toml
+name = "example-cloudflare-workers"
+compatibility_date = "2024-11-06"
+main = "./worker.ts"
+assets = { directory = "./build/client" }
+```
+
+## Cloudflare Pages
+
+To deploy your app to Cloudflare Pages, you can write the following handler on `functions/[[path]].ts`:
 
 ```ts
 // functions/[[path]].ts
@@ -169,7 +191,19 @@ export default defineConfig({
 })
 ```
 
-For Cloudflare Pages, you can add it to the `handle` function:
+For Cloudflare Workers, you can add it to the `handler` function:
+
+```ts
+// worker.ts
+import handle from 'hono-remix-adapter/cloudflare-workers'
+import * as build from './build/server'
+import { getLoadContext } from './load-context'
+import app from './server'
+
+export default handle(build, app, { getLoadContext })
+```
+
+You can also add it for Cloudflare Pages:
 
 ```ts
 // functions/[[path]].ts
