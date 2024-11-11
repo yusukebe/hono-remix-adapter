@@ -1,30 +1,9 @@
-import type { ServerBuild } from '@remix-run/cloudflare'
-import { createRequestHandler } from '@remix-run/cloudflare'
 import { Hono } from 'hono'
 import { handle } from 'hono/cloudflare-pages'
-import { createMiddleware } from 'hono/factory'
 import { staticAssets } from 'remix-hono/cloudflare'
-import { createGetLoadContextArgs, defaultGetLoadContext } from '../remix'
+import { remix } from '../middleware'
+import { defaultGetLoadContext } from '../remix'
 import type { GetLoadContext } from '../remix'
-
-interface RemixMiddlewareOptions {
-  build: ServerBuild
-  mode?: 'development' | 'production'
-  getLoadContext: GetLoadContext
-}
-
-function remix({ mode, build, getLoadContext }: RemixMiddlewareOptions) {
-  return createMiddleware(async (c) => {
-    const requestHandler = createRequestHandler(build, mode)
-    const args = createGetLoadContextArgs(c)
-
-    const loadContext = getLoadContext(args)
-    return await requestHandler(
-      c.req.raw,
-      loadContext instanceof Promise ? await loadContext : loadContext
-    )
-  })
-}
 
 type Options = {
   getLoadContext: GetLoadContext
