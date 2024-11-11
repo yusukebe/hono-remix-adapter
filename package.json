@@ -3,12 +3,13 @@
   "version": "0.3.0",
   "type": "module",
   "scripts": {
-    "test": "npm run test:e2e:cloudflare-pages",
+    "test": "npm run test:e2e",
+    "test:e2e": "npm run test:e2e:cloudflare-pages",
     "test:e2e:cloudflare-pages": "npm run test:e2e -w example-cloudflare-pages",
     "build": "tsup",
     "watch": "tsup --watch",
-    "lint": "eslint src example/app example/server",
-    "lint:fix": "eslint src example/app example/server --fix",
+    "lint": "eslint src examples/cloudflare-pages/app examples/cloudflare-pages/server examples/cloudflare-workers/app examples/cloudflare-workers/server",
+    "lint:fix": "eslint src examples/cloudflare-pages/app examples/cloudflare-pages/server examples/cloudflare-workers/app examples/cloudflare-workers/server --fix",
     "publint": "publint",
     "prerelease": "npm run build && npm run test",
     "release": "np"
@@ -18,7 +19,8 @@
   ],
   "workspaces": [
     "/",
-    "./examples/cloudflare-pages"
+    "./examples/cloudflare-pages",
+    "./examples/cloudflare-workers"
   ],
   "exports": {
     "./vite": {
@@ -28,6 +30,10 @@
     "./cloudflare-pages": {
       "types": "./dist/adapters/cloudflare-pages.d.ts",
       "import": "./dist/adapters/cloudflare-pages.js"
+    },
+    "./cloudflare-workers": {
+      "types": "./dist/adapters/cloudflare-workers.d.ts",
+      "import": "./dist/adapters/cloudflare-workers.js"
     }
   },
   "author": "Yusuke Wada <yusuke@kamawada.com> (https://github.com/yusukebe)",
@@ -44,13 +50,15 @@
     "@cloudflare/vitest-pool-workers": "^0.4.23",
     "@cloudflare/workers-types": "^4.20240815.0",
     "@hono/eslint-config": "^1.0.1",
+    "@remix-run/cloudflare": "^2.14.0",
     "eslint": "^9.10.0",
     "hono": "^4.5.11",
     "np": "^10.0.7",
     "publint": "^0.2.10",
     "tsup": "^8.2.4",
     "vite": "^5.4.3",
-    "vitest": "1.5.0"
+    "vitest": "1.5.0",
+    "wrangler": "^3.86.0"
   },
   "peerDependencies": {
     "hono": "*"
@@ -60,7 +68,6 @@
   },
   "dependencies": {
     "@hono/vite-dev-server": "^0.16.0",
-    "@remix-run/cloudflare": "^2.11.2",
     "remix-hono": "^0.0.16"
   }
 }

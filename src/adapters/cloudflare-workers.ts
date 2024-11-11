@@ -1,6 +1,4 @@
 import { Hono } from 'hono'
-import { handle } from 'hono/cloudflare-pages'
-import { staticAssets } from 'remix-hono/cloudflare'
 import { remix } from '../middleware'
 import { defaultGetLoadContext } from '../remix'
 import type { GetLoadContext } from '../remix'
@@ -18,19 +16,14 @@ export const handler = (serverBuild: any, userApp?: Hono<any, any, any>, options
     app.route('/', userApp)
   }
 
-  app.use(
-    async (c, next) => {
-      return staticAssets()(c, next)
-    },
-    async (c, next) => {
-      return remix({
-        build: serverBuild,
-        mode: 'production',
-        getLoadContext: options?.getLoadContext ?? defaultGetLoadContext,
-      })(c, next)
-    }
-  )
-  return handle(app)
+  app.use(async (c, next) => {
+    return remix({
+      build: serverBuild,
+      mode: 'production',
+      getLoadContext: options?.getLoadContext ?? defaultGetLoadContext,
+    })(c, next)
+  })
+  return app
 }
 
 export default handler
