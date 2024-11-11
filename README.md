@@ -80,7 +80,7 @@ export default defineConfig({
     // ...
     remix(),
     serverAdapter({
-      adapter, // Add Cloudflare Pages adapter
+      adapter, // Add Cloudflare adapter
       entry: 'server/index.ts',
     }),
   ],
