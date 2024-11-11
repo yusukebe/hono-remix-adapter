@@ -3,8 +3,8 @@
   "version": "0.3.0",
   "type": "module",
   "scripts": {
-    "test": "npm run test:e2e",
-    "test:e2e": "npm run test:e2e -w example",
+    "test": "npm run test:e2e:cloudflare-pages",
+    "test:e2e:cloudflare-pages": "npm run test:e2e -w example-cloudflare-pages",
     "build": "tsup",
     "watch": "tsup --watch",
     "lint": "eslint src example/app example/server",
@@ -18,7 +18,7 @@
   ],
   "workspaces": [
     "/",
-    "./example"
+    "./examples/cloudflare-pages"
   ],
   "exports": {
     "./vite": {
