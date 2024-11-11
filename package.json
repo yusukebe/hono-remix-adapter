@@ -26,8 +26,8 @@
       "import": "./dist/vite-plugin.js"
     },
     "./cloudflare-pages": {
-      "types": "./dist/cloudflare-pages.d.ts",
-      "import": "./dist/cloudflare-pages.js"
+      "types": "./dist/adapters/cloudflare-pages.d.ts",
+      "import": "./dist/adapters/cloudflare-pages.js"
     }
   },
   "author": "Yusuke Wada <yusuke@kamawada.com> (https://github.com/yusukebe)",

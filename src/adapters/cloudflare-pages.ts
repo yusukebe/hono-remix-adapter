@@ -4,8 +4,8 @@ import { Hono } from 'hono'
 import { handle } from 'hono/cloudflare-pages'
 import { createMiddleware } from 'hono/factory'
 import { staticAssets } from 'remix-hono/cloudflare'
-import { createGetLoadContextArgs, defaultGetLoadContext } from './remix'
-import type { GetLoadContext } from './remix'
+import { createGetLoadContextArgs, defaultGetLoadContext } from '../remix'
+import type { GetLoadContext } from '../remix'
 
 interface RemixMiddlewareOptions {
   build: ServerBuild
