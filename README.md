@@ -93,9 +93,9 @@ To deploy your app to Cloudflare Workers, you can write the following handler on
 // worker.ts
 import handle from 'hono-remix-adapter/cloudflare-workers'
 import * as build from './build/server'
-import app from './server'
+import server from './server'
 
-export default handle(build, app)
+export default handle(build, server)
 ```
 
 Specify `worker.ts` in your `wrangler.toml`:
