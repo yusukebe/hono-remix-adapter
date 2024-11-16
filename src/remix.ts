@@ -11,7 +11,7 @@ export type GetLoadContext = (args: {
 }) => AppLoadContext | Promise<AppLoadContext>
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const defaultGetLoadContext = ({ context }: any) => {
+export const defaultGetLoadContext = ({ context }: any): AppLoadContext => {
   return {
     ...context,
   }
