@@ -23,7 +23,7 @@ export const handle = (userApp?: Hono, options?: Options) => {
     const args = createGetLoadContextArgs(c)
 
     const remixContext = getLoadContext(args)
-    return handler(c.req.raw, remixContext)
+    return handler(c.req.raw, remixContext instanceof Promise ? await remixContext : remixContext)
   })
 
   return app
