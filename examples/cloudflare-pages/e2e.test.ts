@@ -18,6 +18,9 @@ test('Should return 200 response - /', async ({ page }) => {
 
   const contentH4 = await page.textContent('h4')
   expect(contentH4).toBe('Extra is stuff')
+
+  const contentH5 = await page.textContent('h5')
+  expect(contentH5).toBe('Var in Variables is My variable set in c.set')
 })
 
 test('Should return 200 response - /api', async ({ page }) => {
