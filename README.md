@@ -239,7 +239,7 @@ app.use(async (c, next) => {
 export default app
 ```
 
-In the Remix route, you can get the context by `args.context.hono`:
+In the Remix route, you can get the context from `args.context.hono.context`:
 
 ```ts
 // app/routes/_index.tsx
