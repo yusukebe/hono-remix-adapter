@@ -34,6 +34,10 @@
     "./cloudflare-workers": {
       "types": "./dist/handlers/cloudflare-workers.d.ts",
       "import": "./dist/handlers/cloudflare-workers.js"
+    },
+    "./node": {
+      "types": "./dist/handlers/node/index.d.ts",
+      "import": "./dist/handlers/node/index.js"
     }
   },
   "author": "Yusuke Wada <yusuke@kamawada.com> (https://github.com/yusukebe)",
@@ -60,14 +64,18 @@
     "vitest": "1.5.0",
     "wrangler": "^3.86.0"
   },
-  "peerDependencies": {
-    "hono": "*"
-  },
-  "engines": {
-    "node": ">=18.0.0"
-  },
   "dependencies": {
     "@hono/vite-dev-server": "^0.17.0",
     "remix-hono": "^0.0.16"
+  },
+  "peerDependencies": {
+    "hono": "*"
+  },
+  "optionalDependencies": {
+    "@hono/node-server": "*",
+    "@remix-run/node": "*"
+  },
+  "engines": {
+    "node": ">=18.0.0"
   }
 }
