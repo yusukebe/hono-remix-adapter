@@ -10,8 +10,8 @@
     "watch": "tsup --watch",
     "lint": "eslint src examples/cloudflare-pages/app examples/cloudflare-pages/server examples/cloudflare-workers/app examples/cloudflare-workers/server",
     "lint:fix": "eslint src examples/cloudflare-pages/app examples/cloudflare-pages/server examples/cloudflare-workers/app examples/cloudflare-workers/server --fix",
-    "format": "prettier --check --cache \"src/**/*.{js,ts,tsx}\" \"examples/cloudflare-pages/app/**/*.{js,ts,tsx}\" \"examples/cloudflare-workers/app/**/*.{js,ts,tsx}\"",
-    "format:fix": "prettier --write --cache --cache-strategy metadata \"src/**/*.{js,ts,tsx}\" \"examples/cloudflare-pages/app/**/*.{js,ts,tsx}\" \"examples/cloudflare-workers/app/**/*.{js,ts,tsx}\"",
+    "format": "prettier --check --cache \"src/**/*.{ts,tsx}\" \"examples/cloudflare-pages/**/*.{ts,tsx}\" \"examples/cloudflare-workers/**/*.{ts,tsx}\"",
+    "format:fix": "prettier --write --cache --cache-strategy metadata \"src/**/*.{ts,tsx}\" \"examples/cloudflare-pages/**/*.{ts,tsx}\" \"examples/cloudflare-workers/**/*.{ts,tsx}\"",
     "publint": "publint",
     "prerelease": "npm run build && npm run test",
     "release": "np"
