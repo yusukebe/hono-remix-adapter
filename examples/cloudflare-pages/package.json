@@ -10,7 +10,8 @@
     "start": "wrangler pages dev ./build/client",
     "typecheck": "tsc",
     "preview": "npm run build && wrangler pages dev",
-    "test:e2e": "playwright test -- -c playwright.config.ts e2e.test.ts"
+    "test:e2e:vite": "playwright test -c playwright-vite.config.ts e2e.test.ts",
+    "test:e2e:pages": "npm run build && playwright test -c playwright-pages.config.ts e2e.test.ts"
   },
   "dependencies": {
     "@remix-run/cloudflare": "^2.14.0",
