@@ -4,11 +4,12 @@ import { useLoaderData } from '@remix-run/react'
 export const loader = (args: LoaderFunctionArgs) => {
   const extra = args.context.extra
   const cloudflare = args.context.cloudflare
-  return { cloudflare, extra }
+  const myVarInVariables = args.context.hono.context.get('MY_VAR_IN_VARIABLES')
+  return { cloudflare, extra, myVarInVariables }
 }
 
 export default function Index() {
-  const { cloudflare, extra } = useLoaderData<typeof loader>()
+  const { cloudflare, extra, myVarInVariables } = useLoaderData<typeof loader>()
   return (
     <div>
       <h1>Remix and Hono</h1>
@@ -19,6 +20,7 @@ export default function Index() {
         {cloudflare.caches ? 'caches are available' : ''}
       </h3>
       <h4>Extra is {extra}</h4>
+      <h5>Var in Variables is {myVarInVariables}</h5>
     </div>
   )
 }

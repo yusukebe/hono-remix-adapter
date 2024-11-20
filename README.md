@@ -217,6 +217,88 @@ export const onRequest = handle(build, server, { getLoadContext })
 
 This way is almost the same as [Remix](https://remix.run/docs/en/main/guides/vite#augmenting-load-context).
 
+### Getting Hono context
+
+You can get the Hono context in Remix routes. For example, you can pass the value with `c.set()` from your Hono instance in the `server/index.ts`:
+
+```ts
+// server/index.ts
+import { Hono } from 'hono'
+
+const app = new Hono<{
+  Variables: {
+    message: string
+  }
+}>()
+
+app.use(async (c, next) => {
+  c.set('message', 'Hi from Hono')
+  await next()
+})
+
+export default app
+```
+
+In the Remix route, you can get the context from `args.context.hono.context`:
+
+```ts
+// app/routes/_index.tsx
+import type { LoaderFunctionArgs } from '@remix-run/cloudflare'
+import { useLoaderData } from '@remix-run/react'
+
+export const loader = ({ context }) => {
+  const message = args.context.hono.context.get('message')
+  return { message }
+}
+
+export default function Index() {
+  const { message } = useLoaderData<typeof loader>()
+  return <h1>Message is {message}</h1>
+}
+```
+
+To enable type inference, config the `load-context.ts` like follows:
+
+```ts
+// load-context.ts
+import type { AppLoadContext } from '@remix-run/cloudflare'
+import type { Context } from 'hono'
+import type { PlatformProxy } from 'wrangler'
+
+type Env = {
+  Variables: {
+    message: string
+  }
+}
+
+type Cloudflare = Omit<PlatformProxy, 'dispose'>
+
+declare module '@remix-run/cloudflare' {
+  interface AppLoadContext {
+    cloudflare: Cloudflare
+    hono: {
+      context: Context<Env>
+    }
+    extra: string
+  }
+}
+
+type GetLoadContext = (args: {
+  request: Request
+  context: {
+    cloudflare: Cloudflare
+    hono: { context: Context<Env> }
+  }
+}) => AppLoadContext
+
+export const getLoadContext: GetLoadContext = ({ context }) => {
+  return {
+    ...context,
+    extra: 'stuff',
+  }
+}
+```
+
 ## Auth middleware for Remix routes
 
 If you want to add Auth Middleware, e.g. Basic Auth middleware, please be careful that users can access the protected pages with SPA tradition. To prevent this, add a `loader` to the page:
