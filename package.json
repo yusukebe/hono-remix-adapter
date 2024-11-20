@@ -20,7 +20,8 @@
   "workspaces": [
     "/",
     "./examples/cloudflare-pages",
-    "./examples/cloudflare-workers"
+    "./examples/cloudflare-workers",
+    "./examples/node"
   ],
   "exports": {
     "./vite": {
