@@ -1,14 +1,19 @@
 import type { AppLoadContext } from '@remix-run/cloudflare'
 import type { Context } from 'hono'
 
-export type GetLoadContext = (args: {
+type GetLoadContextArgs = {
   request: Request
   context: {
     // Relaxing the type definition
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     cloudflare: any
+    hono: {
+      context: Context
+    }
   }
-}) => AppLoadContext | Promise<AppLoadContext>
+}
+
+export type GetLoadContext = (args: GetLoadContextArgs) => AppLoadContext | Promise<AppLoadContext>
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const defaultGetLoadContext = ({ context }: any): AppLoadContext => {
@@ -17,7 +22,7 @@ export const defaultGetLoadContext = ({ context }: any): AppLoadContext => {
   }
 }
 
-export const createGetLoadContextArgs = (c: Context) => {
+export const createGetLoadContextArgs = (c: Context): GetLoadContextArgs => {
   return {
     context: {
       cloudflare: {
@@ -28,6 +33,9 @@ export const createGetLoadContextArgs = (c: Context) => {
         },
         // @ts-expect-error globalThis.caches is not typed
         caches: globalThis.caches ? caches : undefined,
+      },
+      hono: {
+        context: c,
       },
     },
     request: c.req.raw,
