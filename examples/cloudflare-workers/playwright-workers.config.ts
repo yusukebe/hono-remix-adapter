@@ -1,12 +1,14 @@
 import { defineConfig, devices } from '@playwright/test'
 
+const port = 8797
+
 export default defineConfig({
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 2 : 0,
   workers: process.env.CI ? 1 : undefined,
   use: {
-    baseURL: 'http://localhost:6173',
+    baseURL: `http://localhost:${port.toString()}`,
   },
   projects: [
     {
@@ -17,8 +19,8 @@ export default defineConfig({
     },
   ],
   webServer: {
-    command: 'npm exec vite -- --port 6173 -c ./vite.config.ts',
-    port: 6173,
+    command: `npm exec wrangler dev -- --port ${port.toString()} ./worker.ts`,
+    port,
     reuseExistingServer: !process.env.CI,
   },
 })
