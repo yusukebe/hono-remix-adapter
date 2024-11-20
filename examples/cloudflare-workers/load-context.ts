@@ -16,10 +16,10 @@ type GetLoadContextArgs = {
     cloudflare: Omit<PlatformProxy<Env['Bindings']>, 'dispose' | 'caches' | 'cf'> & {
       caches: PlatformProxy<Env>['caches'] | CacheStorage
       cf: Request['cf']
-    },
+    }
     hono: {
       context: Context<Env>
-    },
+    }
   }
 }
 
