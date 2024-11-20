@@ -1,3 +1,4 @@
+import type { Context } from 'hono'
 import type { PlatformProxy } from 'wrangler'
 
 interface Env {
@@ -10,7 +11,10 @@ type GetLoadContextArgs = {
     cloudflare: Omit<PlatformProxy<Env>, 'dispose' | 'caches' | 'cf'> & {
       caches: PlatformProxy<Env>['caches'] | CacheStorage
       cf: Request['cf']
-    }
+    },
+    hono: {
+      context: Context
+    },
   }
 }
 
