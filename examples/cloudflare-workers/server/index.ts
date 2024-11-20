@@ -6,12 +6,12 @@ const app = new Hono<{
     MY_VAR: string
   },
   Variables: {
-    'hono-context': string
+    'MY_VAR_IN_VARIABLES': string
   },
 }>()
 
 app.use(async(c, next) => {
-  c.set('hono-context', 'hono-context')
+  c.set('MY_VAR_IN_VARIABLES', 'My variable set in c.set')
   await next()
   c.header('X-Powered-By', 'Remix and Hono')
 })
@@ -19,9 +19,8 @@ app.use(async(c, next) => {
 app.get('/api', (c) => {
   return c.json({
     message: 'Hello',
-    var: c.env.MY_VAR
+    var: c.env.MY_VAR,
   })
 })
-
 
 export default app
