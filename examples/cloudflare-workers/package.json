@@ -10,7 +10,7 @@
     "start": "wrangler dev",
     "typecheck": "tsc",
     "preview": "npm run build && wrangler dev",
-    "test:e2e:workers": "playwright test -c playwright-workers.config.ts e2e.test.ts"
+    "test:e2e:workers": "npm run build && playwright test -c playwright-workers.config.ts e2e.test.ts"
   },
   "dependencies": {
     "@remix-run/cloudflare": "^2.14.0",
