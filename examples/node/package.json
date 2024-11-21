@@ -8,6 +8,8 @@
     "dev": "remix vite:dev",
     "start": "remix-serve ./build/server/index.js",
     "start-with-adapter": "tsx main.ts",
+    "test:e2e:vite": "playwright test -c playwright-vite.config.ts e2e.test.ts",
+    "test:e2e:node": "npm run build && playwright test -c playwright-node.config.ts e2e.test.ts",
     "typecheck": "tsc"
   },
   "dependencies": {
@@ -21,10 +23,12 @@
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
+    "@playwright/test": "^1.48.2",
     "@remix-run/dev": "^2.14.0",
     "@types/react": "^18.2.20",
     "@types/react-dom": "^18.2.7",
     "autoprefixer": "^10.4.19",
+    "playwright": "^1.47.0",
     "tsx": "^4.19.2",
     "typescript": "^5.1.6",
     "vite": "^5.1.0",

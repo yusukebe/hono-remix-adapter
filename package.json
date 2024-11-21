@@ -8,6 +8,7 @@
     "test:e2e:vite": "npm run test:e2e:vite -w example-cloudflare-pages",
     "test:e2e:cloudflare-pages": "npm run test:e2e:pages -w example-cloudflare-pages",
     "test:e2e:cloudflare-workers": "npm run test:e2e:workers -w example-cloudflare-workers",
+    "test:e2e:node": "npm run test:e2e:node -w example-node",
     "build": "tsup",
     "watch": "tsup --watch",
     "lint": "eslint src examples/cloudflare-pages/app examples/cloudflare-pages/server examples/cloudflare-workers/app examples/cloudflare-workers/server",
