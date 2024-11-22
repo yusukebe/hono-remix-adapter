@@ -1,6 +1,6 @@
 # hono-remix-adapter
 
-`hono-remix-adapter` is a set of tools for adapting between Hono and Remix. It is composed of a Vite plugin and handlers that enable it to support platforms like Cloudflare Workers. You can create an Hono app, and it will be applied to your Remix app.
+`hono-remix-adapter` is a set of tools for adapting between Hono and Remix. It is composed of a Vite plugin and handlers that enable it to support platforms like Cloudflare Workers and Node.js. You just create Hono app, and it will be applied to your Remix app.
 
 ```ts
 // server/index.ts
@@ -118,6 +118,42 @@ import * as build from '../build/server'
 import server from '../server'
 
 export const onRequest = handle(build, server)
+```
+
+## Node.js
+
+If you want to run your app on Node.js, you can use `hono-remix-adapter/node`. Write `main.ts`:
+
+```ts
+// main.ts
+import { serve } from '@hono/node-server'
+import { serveStatic } from '@hono/node-server/serve-static'
+import handle from 'hono-remix-adapter/node'
+import * as build from './build/server'
+import { getLoadContext } from './load-context'
+import server from './server'
+
+server.use(
+  serveStatic({
+    root: './build/client',
+  })
+)
+
+const handler = handle(build, server, { getLoadContext })
+
+serve({ fetch: handler.fetch, port: 3010 })
+```
+
+Run `main.ts` with [`tsx`](https://github.com/privatenumber/tsx):
+
+```bash
+tsx main.ts
+```
+
+Or you can compile to a pure JavaScript file with `esbuild` with the command below:
+
+```bash
+esbuild main.ts --bundle --outfile=main.mjs --platform=node --target=node16.8 --format=esm --banner:js='import { createRequire as topLevelCreateRequire } from "module"; const require = topLevelCreateRequire(import.meta.url);'
 ```
 
 ## `getLoadContext`

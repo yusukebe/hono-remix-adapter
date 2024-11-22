@@ -8,12 +8,13 @@
     "test:e2e:vite": "npm run test:e2e:vite -w example-cloudflare-pages",
     "test:e2e:cloudflare-pages": "npm run test:e2e:pages -w example-cloudflare-pages",
     "test:e2e:cloudflare-workers": "npm run test:e2e:workers -w example-cloudflare-workers",
+    "test:e2e:node": "npm run test:e2e:node -w example-node",
     "build": "tsup",
     "watch": "tsup --watch",
     "lint": "eslint src examples/cloudflare-pages/app examples/cloudflare-pages/server examples/cloudflare-workers/app examples/cloudflare-workers/server",
     "lint:fix": "eslint src examples/cloudflare-pages/app examples/cloudflare-pages/server examples/cloudflare-workers/app examples/cloudflare-workers/server --fix",
-    "format": "prettier --check --cache \"src/**/*.{ts,tsx}\" \"examples/cloudflare-pages/**/*.{ts,tsx}\" \"examples/cloudflare-workers/**/*.{ts,tsx}\"",
-    "format:fix": "prettier --write --cache --cache-strategy metadata \"src/**/*.{ts,tsx}\" \"examples/cloudflare-pages/**/*.{ts,tsx}\" \"examples/cloudflare-workers/**/*.{ts,tsx}\"",
+    "format": "prettier --check --cache \"src/**/*.{ts,tsx}\" \"examples/cloudflare-pages/**/*.{ts,tsx}\" \"examples/cloudflare-workers/**/*.{ts,tsx}\" \"examples/node/**/*.{ts,tsx}\"",
+    "format:fix": "prettier --write --cache --cache-strategy metadata \"src/**/*.{ts,tsx}\" \"examples/cloudflare-pages/**/*.{ts,tsx}\" \"examples/cloudflare-workers/**/*.{ts,tsx}\" \"examples/node/**/*.{ts,tsx}\"",
     "publint": "publint",
     "prerelease": "npm run build && npm run test",
     "release": "np"
@@ -24,7 +25,8 @@
   "workspaces": [
     "/",
     "./examples/cloudflare-pages",
-    "./examples/cloudflare-workers"
+    "./examples/cloudflare-workers",
+    "./examples/node"
   ],
   "exports": {
     "./vite": {
@@ -38,6 +40,10 @@
     "./cloudflare-workers": {
       "types": "./dist/handlers/cloudflare-workers.d.ts",
       "import": "./dist/handlers/cloudflare-workers.js"
+    },
+    "./node": {
+      "types": "./dist/handlers/node/index.d.ts",
+      "import": "./dist/handlers/node/index.js"
     }
   },
   "author": "Yusuke Wada <yusuke@kamawada.com> (https://github.com/yusukebe)",
@@ -65,14 +71,18 @@
     "vitest": "1.5.0",
     "wrangler": "^3.86.0"
   },
-  "peerDependencies": {
-    "hono": "*"
-  },
-  "engines": {
-    "node": ">=18.0.0"
-  },
   "dependencies": {
     "@hono/vite-dev-server": "^0.17.0",
     "remix-hono": "^0.0.16"
+  },
+  "peerDependencies": {
+    "hono": "*"
+  },
+  "optionalDependencies": {
+    "@hono/node-server": "*",
+    "@remix-run/node": "*"
+  },
+  "engines": {
+    "node": ">=18.0.0"
   }
 }
