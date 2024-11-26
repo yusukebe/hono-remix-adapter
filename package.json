@@ -9,6 +9,9 @@
     "test:e2e:cloudflare-pages": "npm run test:e2e:pages -w example-cloudflare-pages",
     "test:e2e:cloudflare-workers": "npm run test:e2e:workers -w example-cloudflare-workers",
     "test:e2e:node": "npm run test:e2e:node -w example-node",
+    "test:e2e:cloudflare-pages-react-router": "npm run test:e2e:pages -w example-cloudflare-pages-react-router",
+    "test:e2e:cloudflare-workers-react-router": "npm run test:e2e:workers -w example-cloudflare-workers-react-router",
+    "test:e2e:node-react-router": "npm run test:e2e:node -w example-node-react-router",
     "build": "tsup",
     "watch": "tsup --watch",
     "lint": "eslint src examples/cloudflare-pages/app examples/cloudflare-pages/server examples/cloudflare-workers/app examples/cloudflare-workers/server",
@@ -26,7 +29,10 @@
     "/",
     "./examples/cloudflare-pages",
     "./examples/cloudflare-workers",
-    "./examples/node"
+    "./examples/node",
+    "./examples/react-router/cloudflare-pages",
+    "./examples/react-router/cloudflare-workers",
+    "./examples/react-router/node"
   ],
   "exports": {
     "./vite": {

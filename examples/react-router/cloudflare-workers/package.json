@@ -1,0 +1,39 @@
+{
+  "name": "example-cloudflare-workers-react-router",
+  "private": true,
+  "sideEffects": false,
+  "type": "module",
+  "scripts": {
+    "build": "react-router build",
+    "deploy": "npm run build && wrangler deploy",
+    "dev": "react-router dev",
+    "start": "wrangler dev",
+    "typecheck": "tsc",
+    "preview": "npm run build && wrangler dev",
+    "test:e2e:vite": "playwright test -c playwright-vite.config.ts e2e.test.ts",
+    "test:e2e:workers": "npm run build && playwright test -c playwright-workers.config.ts e2e.test.ts"
+  },
+  "dependencies": {
+    "@react-router/cloudflare": "^7.0.1",
+    "hono": "^4.6.9",
+    "isbot": "^4.1.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-router": "^7.0.1"
+  },
+  "devDependencies": {
+    "@hono/vite-dev-server": "^0.16.0",
+    "@playwright/test": "^1.48.2",
+    "@react-router/dev": "^7.0.1",
+    "@types/react": "^18.2.20",
+    "@types/react-dom": "^18.2.7",
+    "playwright": "^1.47.0",
+    "typescript": "^5.1.6",
+    "vite": "^5.1.0",
+    "vite-tsconfig-paths": "^4.2.1",
+    "wrangler": "^3.86.0"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}

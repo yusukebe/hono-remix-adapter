@@ -1,0 +1,8 @@
+#:schema node_modules/wrangler/config-schema.json
+name = "example-cloudflare-workers"
+compatibility_date = "2024-11-06"
+main = "./worker.ts"
+assets = { directory = "./build/client" }
+
+[vars]
+MY_VAR = "My Value"
