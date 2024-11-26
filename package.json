@@ -44,6 +44,22 @@
     "./node": {
       "types": "./dist/handlers/node/index.d.ts",
       "import": "./dist/handlers/node/index.js"
+    },
+    "./vite@react-router": {
+      "types": "./dist/react-router/vite-plugin.d.ts",
+      "import": "./dist/react-router/vite-plugin.js"
+    },
+    "./cloudflare-pages@react-router": {
+      "types": "./dist/react-router/handlers/cloudflare-pages.d.ts",
+      "import": "./dist/react-router/handlers/cloudflare-pages.js"
+    },
+    "./cloudflare-workers@react-router": {
+      "types": "./dist/react-router/handlers/cloudflare-workers.d.ts",
+      "import": "./dist/react-router/handlers/cloudflare-workers.js"
+    },
+    "./node@react-router": {
+      "types": "./dist/react-router/handlers/node/index.d.ts",
+      "import": "./dist/react-router/handlers/node/index.js"
     }
   },
   "author": "Yusuke Wada <yusuke@kamawada.com> (https://github.com/yusukebe)",
@@ -73,6 +89,7 @@
   },
   "dependencies": {
     "@hono/vite-dev-server": "^0.17.0",
+    "react-router": "^7.0.1",
     "remix-hono": "^0.0.16"
   },
   "peerDependencies": {
