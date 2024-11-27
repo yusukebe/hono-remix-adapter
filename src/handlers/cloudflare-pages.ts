@@ -1,7 +1,6 @@
 import { Hono } from 'hono'
 import { handle } from 'hono/cloudflare-pages'
-import { staticAssets } from 'remix-hono/cloudflare'
-import { remix } from '../middleware'
+import { remix, staticAssets } from '../middleware'
 import { defaultGetLoadContext } from '../remix'
 import type { GetLoadContext } from '../remix'
 
