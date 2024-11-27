@@ -16,7 +16,7 @@ export const handle = (userApp?: Hono, options?: Options) => {
   app.all('*', async (c) => {
     // @ts-expect-error it's not typed
     const build = await import('virtual:remix/server-build')
-    const { createRequestHandler } = await import('@remix-run/cloudflare')
+    const { createRequestHandler } = await import('@remix-run/server-runtime')
     const handler = createRequestHandler(build, 'development')
 
     const getLoadContext = options?.getLoadContext ?? defaultGetLoadContext
