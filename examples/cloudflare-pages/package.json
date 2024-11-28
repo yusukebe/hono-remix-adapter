@@ -19,8 +19,7 @@
     "hono": "^4.5.11",
     "isbot": "^4.1.0",
     "react": "^18.3.1",
-    "react-dom": "^18.3.1",
-    "remix-hono": "^0.0.16"
+    "react-dom": "^18.3.1"
   },
   "devDependencies": {
     "@hono/vite-dev-server": "^0.16.0",
