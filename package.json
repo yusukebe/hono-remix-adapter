@@ -73,8 +73,7 @@
   },
   "dependencies": {
     "@hono/vite-dev-server": "^0.17.0",
-    "@remix-run/server-runtime": "^2.15.0",
-    "remix-hono": "^0.0.16"
+    "@remix-run/server-runtime": "^2.15.0"
   },
   "peerDependencies": {
     "hono": "*"

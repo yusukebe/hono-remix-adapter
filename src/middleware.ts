@@ -22,3 +22,48 @@ export const remix = ({ mode, build, getLoadContext }: RemixMiddlewareOptions) =
     )
   })
 }
+
+/**
+ * A string of directives for the Cache-Control header.
+ * See the [MDN](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cache-Control) docs for more information.
+ */
+
+type CacheControl = string
+
+interface StaticAssetsOptions {
+  cache?: CacheControl
+}
+
+export function staticAssets(options: StaticAssetsOptions = {}) {
+  return createMiddleware(async (c, next) => {
+    const binding = c.env?.ASSETS as Fetcher | undefined
+
+    if (!binding) {
+      throw new ReferenceError('The binding ASSETS is not set.')
+    }
+
+    let response: Response
+
+    c.req.raw.headers.delete('if-none-match')
+
+    try {
+      response = await binding.fetch(c.req.url, c.req.raw.clone())
+
+      // If the request failed, we just call the next middleware
+      if (response.status >= 400) {
+        return await next()
+      }
+
+      response = new Response(response.body, response)
+
+      // If cache options are configured, we set the cache-control header
+      if (options.cache) {
+        response.headers.set('cache-control', options.cache)
+      }
+
+      return response
+    } catch {
+      return await next()
+    }
+  })
+}
