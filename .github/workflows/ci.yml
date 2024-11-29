@@ -6,7 +6,8 @@ on:
     branches: ['*']
 
 jobs:
-  ci:
+  vite:
+    name: 'Vite'
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -22,4 +23,61 @@ jobs:
       - run: npm install
       - run: npx playwright install --with-deps
       - run: npm run build
-      - run: npm run test
+      - run: npm run test:e2e:vite
+
+  cloudflare-pages:
+    name: 'Cloudflare Pages'
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./
+    strategy:
+      matrix:
+        node: [20, 22]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+      - run: npm install
+      - run: npx playwright install --with-deps
+      - run: npm run build
+      - run: npm run test:e2e:cloudflare-pages
+
+  cloudflare-workers:
+    name: 'Cloudflare Workers'
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./
+    strategy:
+      matrix:
+        node: [20, 22]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+      - run: npm install
+      - run: npx playwright install --with-deps
+      - run: npm run build
+      - run: npm run test:e2e:cloudflare-workers
+
+  node:
+    name: 'Node.js'
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./
+    strategy:
+      matrix:
+        node: [20, 22]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+      - run: npm install
+      - run: npx playwright install --with-deps
+      - run: npm run build
+      - run: npm run test:e2e:node
