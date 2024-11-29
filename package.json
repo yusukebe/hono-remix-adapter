@@ -80,6 +80,7 @@
   },
   "optionalDependencies": {
     "@hono/node-server": "*",
+    "@remix-run/cloudflare": "*",
     "@remix-run/node": "*"
   },
   "engines": {
