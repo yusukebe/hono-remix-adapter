@@ -31,7 +31,7 @@ This means you can create API routes with Hono's syntax and use a lot of Hono's 
 ## Install
 
 ```bash
-npm i hono-remix-adapter
+npm i hono-remix-adapter hono
 ```
 
 ## How to use
