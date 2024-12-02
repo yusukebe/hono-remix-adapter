@@ -26,7 +26,12 @@ export default (options: Options): Plugin => {
   return devServer({
     adapter: options?.adapter,
     entry: options.entry,
-    exclude: options?.exclude ?? [...defaultOptions.exclude, '/assets/**', '/app/**'],
+    exclude: options?.exclude ?? [
+      ...defaultOptions.exclude,
+      '/assets/**',
+      '/app/**',
+      '/src/app/**',
+    ],
     injectClientScript: false,
     loadModule: async (server, entry) => {
       const appModule = await server.ssrLoadModule(entry)
