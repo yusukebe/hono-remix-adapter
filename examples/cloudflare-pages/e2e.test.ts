@@ -24,6 +24,9 @@ test('Should return 200 response - /', async ({ page }) => {
 
   const contentH6 = await page.textContent('h6')
   expect(contentH6).toBe('waitUntil is defined')
+
+  const imageResponse = await page.goto('/logo-dark.png?inline')
+  expect(imageResponse?.status()).toBe(200)
 })
 
 test('Should return 200 response - /api', async ({ page }) => {

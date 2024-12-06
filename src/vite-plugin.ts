@@ -31,6 +31,8 @@ export default (options: Options): Plugin => {
       '/assets/**',
       '/app/**',
       '/src/app/**',
+      // matches for vite's import assets suffixes
+      /\?(import(&)?)?(inline|url|no-inline|raw)?$/,
     ],
     injectClientScript: false,
     loadModule: async (server, entry) => {
