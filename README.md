@@ -335,6 +335,76 @@ export const getLoadContext: GetLoadContext = ({ context }) => {
 }
 ```
 
+## AsyncLocalStorage
+
+You can use AsyncLocalStorage, which is supported by Node.js, Cloudflare Workers, etc.
+
+```ts
+// server/context/index.ts
+import { AsyncLocalStorage } from 'node:async_hooks'
+
+export const context = new AsyncLocalStorage<ReturnType<typeof createContext>>()
+
+export const createContext = (req: Request) => {
+  const serverContext = {
+    headers: req.headers,
+    key: 'your-value',
+    // db: new DatabaseConnection() // It's also a good idea to store database connections, etc.
+  }
+
+  return serverContext
+}
+
+const getStore = () => {
+  const store = context.getStore()
+
+  if (!store) {
+    throw new Error('No context store found')
+  }
+
+  return store
+}
+
+export const getHeaders = () => {
+  return getStore().headers()
+}
+
+// export const db = () => {
+//   return getStore().db
+// }
+```
+
+Store the context created in AsyncLocalStorage with Hono.
+
+```ts
+// server/index.ts
+import { Hono } from 'hono'
+import { context, createContext } from './contexts'
+
+const app = new Hono()
+
+app.use(async (c, next) => {
+  const serverContext = createContext(c.req.raw)
+
+  await context.run(serverContext, async () => {
+    await next()
+  })
+})
+
+export default app
+```
+
+You can retrieve and process the context stored in AsyncLocalStorage from Remix as follows.
+
+```ts
+// app/routes/_index.tsx
+import { getHeaders } from 'server/context' // It can be called anywhere for server-side processing.
+
+export const loader = () => {
+  const cookie = getHeaders().get('Cookie')
+}
+```
+
 ## Auth middleware for Remix routes
 
 If you want to add Auth Middleware, e.g. Basic Auth middleware, please be careful that users can access the protected pages with SPA tradition. To prevent this, add a `loader` to the page:
