@@ -375,7 +375,9 @@ import type { Env } from 'server'
 import { getContext } from 'hono/context-storage' // It can be called anywhere for server-side processing.
 
 export const loader = () => {
-  const cookie = getContext<Env>().headers.get('Cookie')
+  const cookie = getContext<Env>().var.headers.get('Cookie')
+  const message = getContext<Env>().var.message
+  ...
 }
 ```
 
