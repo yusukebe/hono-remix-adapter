@@ -347,7 +347,6 @@ import { contextStorage } from 'hono/context-storage'
 
 export interface Env {
   Variables: {
-    headers: Headers
     key: string
     // db: DatabaseConnection // It's also a good idea to store database connections, etc.
   }
@@ -358,7 +357,6 @@ const app = new Hono<Env>()
 app.use(contextStorage())
 
 app.use(async (c, next) => {
-  c.set('headers', c.req.raw.headers)
   c.set('message', 'Hello!')
 
   await next()
@@ -375,7 +373,6 @@ import type { Env } from 'server'
 import { getContext } from 'hono/context-storage' // It can be called anywhere for server-side processing.
 
 export const loader = () => {
-  const cookie = getContext<Env>().var.headers.get('Cookie')
   const message = getContext<Env>().var.message
   ...
 }
