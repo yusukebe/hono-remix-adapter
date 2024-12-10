@@ -335,6 +335,49 @@ export const getLoadContext: GetLoadContext = ({ context }) => {
 }
 ```
 
+## AsyncLocalStorage
+
+You can use AsyncLocalStorage, which is supported by Node.js, Cloudflare Workers, etc.
+You can easily store context using Hono's Context Storage Middleware.
+
+```ts
+// server/index.ts
+import { Hono } from 'hono'
+import { contextStorage } from 'hono/context-storage'
+
+export interface Env {
+  Variables: {
+    message: string
+    // db: DatabaseConnection // It's also a good idea to store database connections, etc.
+  }
+}
+
+const app = new Hono<Env>()
+
+app.use(contextStorage())
+
+app.use(async (c, next) => {
+  c.set('message', 'Hello!')
+
+  await next()
+})
+
+export default app
+```
+
+You can retrieve and process the context saved in Hono from Remix as follows:
+
+```ts
+// app/routes/_index.tsx
+import type { Env } from 'server'
+import { getContext } from 'hono/context-storage' // It can be called anywhere for server-side processing.
+
+export const loader = () => {
+  const message = getContext<Env>().var.message
+  ...
+}
+```
+
 ## Auth middleware for Remix routes
 
 If you want to add Auth Middleware, e.g. Basic Auth middleware, please be careful that users can access the protected pages with SPA tradition. To prevent this, add a `loader` to the page:
