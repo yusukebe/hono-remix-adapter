@@ -347,7 +347,7 @@ import { contextStorage } from 'hono/context-storage'
 
 export interface Env {
   Variables: {
-    key: string
+    message: string
     // db: DatabaseConnection // It's also a good idea to store database connections, etc.
   }
 }
