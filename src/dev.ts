@@ -23,10 +23,15 @@ export const handle = (userApp?: Hono, options?: Options) => {
     const args = createGetLoadContextArgs(c)
 
     const reactRouterContext = getLoadContext(args)
-    return handler(
-      c.req.raw,
-      reactRouterContext instanceof Promise ? await reactRouterContext : reactRouterContext
-    )
+    const resolvedContext = reactRouterContext instanceof Promise ? await reactRouterContext : reactRouterContext
+
+    const response = await handler(c.req.raw, resolvedContext)
+
+    if (response.headers.get('content-type')?.includes('text/html')) {
+      response.headers.set('transfer-encoding', 'chunked')
+    }
+
+    return response
   })
 
   return app
